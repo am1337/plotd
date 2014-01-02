@@ -51,7 +51,30 @@ int manualControl(void)
 	printf("Parsing input.nc\n");
 	readGCodeFile("input.nc");
 	break;
-  
+      case 'o':
+	do {
+	  printf("Set offset to:\n");
+	  printf("0) none (default)\n");
+	  printf("1) A4\n");
+	  input=getInputChar();
+	}
+	while (input<'0'||input>'1');
+	
+	if(input=='0')
+	{
+	  setZero(JUMP);
+	}
+	else
+	{
+	  setZero(JUMP);
+	  printf("Set offset to A4\n");
+	  move2pos(47, 0, JUMP);
+	  posX = 0;
+	  posY = 0;
+	  printf("offset reached\n");
+	}
+	break;
+	break;
       case 'l':
 	do {
 	  printf("Set laser output power to:\n");
@@ -134,6 +157,11 @@ int manualControl(void)
 	}
 	break;
 	
+      case 'b':
+	initImageIn();
+	parseImage();
+	drawImage();
+	break;
       case 'q':
 	exit(0);
 	break;
@@ -147,10 +175,13 @@ int manualControl(void)
 	printf("m		move to max position\n");
 	printf("l		set power of laser\n");
 	printf("s		set speed\n");
+	printf("o		set offset\n");
 	printf("p		print current position\n");
 	printf("r 		read and plot file\n");
 	printf("h		show this help\n");
 	printf("q		quit\n");
+	printf("b		read bitmap\n");
+	printf("b		set lines to skip\n");// todo
 	break;
     }
     setLaser(POW_OFF);
@@ -170,7 +201,20 @@ void sigfunc(int sig)
     if (cancel == 0)
     {
       cancel = 1;
-      printf("press ctrl+c again to end program\n");
+      printf("press ctrl+c again to pause program\n");
+    }
+    else if (cancel == 1)
+    {
+      cancel = 2;
+      int laser=laserOn;
+      setLaser(POW_OFF);
+      printf("press 'e' to end program\n");
+      printf("press any other key to resume program\n");
+      int input = getInputChar();
+      if (input=='e')
+	exit (0);
+      setLaser(laser);
+      cancel=0;
     }
     else
     {

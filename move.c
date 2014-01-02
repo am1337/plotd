@@ -27,9 +27,10 @@ void wait4step(int speed) {
 	break;
     }
   }
+  /*
   // set pixel of bitmap
   int pixel=(((posY*4484)+(posX))*3)+54;
-  if (pixel+2 <= IMAGESIZE) {
+  if (pixel+2 <= IMAGESIZE && pixel > 54) {
     if(laserOn==TRUE) {
       bitmap[pixel]=0x00;
       bitmap[pixel+1]=0x00;
@@ -37,6 +38,12 @@ void wait4step(int speed) {
     }
     else
       bitmap[pixel+2]=0x00;
+  }*/
+  if( posY >= 0 && posY < MAX_HEIGHT && posX >= 0 && posX < MAX_WIDTH){
+    if(laserOn==TRUE)
+      image_out[posX][posY] = 1;
+    else
+      image_out[posX][posY] = 2;
   }
 }  
 

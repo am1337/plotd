@@ -7,6 +7,7 @@
 #include <signal.h>
 #include <math.h>
 #include <wiringPi.h>
+#include <wand/MagickWand.h>
 
 #define SIM 0	// 0 Move Plotter, 1 only simulate
 
@@ -31,14 +32,19 @@
 #define POW_HI	767
 #define POW_MAX	1023
 
+// These are the steps the plotter can go in each direction
+#define MAX_WIDTH  4484	// X
+#define MAX_HEIGHT 7468 // Y
+
 #define STEPS_PER_MM 23.622 // Valid in fullstep mode, double for half-step mode
 
 // Image output
 // image size X=4484 x Y=7468 = 33.486.512 pixel
-#define PIXEL		33486512
-#define IMAGESIZE	100459590 // 54 + 3 * PIXEL
-char bitmap[IMAGESIZE];
-
+//#define PIXEL		33486512
+//#define IMAGESIZE	100459590 // 54 + 3 * PIXEL
+//char bitmap[IMAGESIZE];
+char image_in[MAX_WIDTH][MAX_HEIGHT];
+char image_out[MAX_WIDTH][MAX_HEIGHT];
 // left/right is x-axis, down is 0, up is 7460
 char patternsX[] 	= 	{0x5, 0x9, 0xa, 0x6}; // fullstep mode
 int stepX		=	0;

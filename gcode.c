@@ -43,7 +43,7 @@ int readGCodeFile(char* input)
   int speed = FAST; // set to SLOW etc, whatever is neccessary TODO depends on F value
   //int i=0;
     
-  initBitmap();
+  initImageOut();
     
   do
   {
@@ -215,7 +215,7 @@ int readGCodeFile(char* input)
   
   setZero(JUMP);
   printf("Plot finished\n");
-  writeBitmap();
+  //writeBitmap();
   
   return OK;
 }

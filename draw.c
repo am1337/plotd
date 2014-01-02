@@ -181,8 +181,56 @@ int drawPieSlice(int X1, int Y1, int X2, int Y2, int X, int Y, float angleStart,
       
       move2pos(Xnew, Ynew, speed);
     }
+    setLaser(POW_OFF);
   }
   setLaser(POW_OFF);
   
+  return OK;
+}
+
+int drawImage() {
+  int x,y;
+  setLaser(POW_OFF);
+  int i=0;
+  int skip_lines=3;
+  //for(x=0;x<MAX_WIDTH;x++)
+  //for(x=0;x<MAX_WIDTH;x=x+10) // Y-Achse alle X Zeilen resetten, X-Achse muss nicht resettet werden (oder umgekehrt)
+  //for(x=(MAX_WIDTH-1);x>=0;x=x-5)   
+  //for( x = ( MAX_WIDTH - 1 ); x >= 0; x = x - ( 1 + skip_lines ) )
+  for( x = 0; x < MAX_WIDTH; x = x + 1 + skip_lines )
+  {
+    printf("Line %d\n",x);
+    setLaser(POW_OFF);
+    i++;
+    
+    //if(x%2==0)
+    if(i%2==0)
+    {
+      for(y=0;y<MAX_HEIGHT;y++)
+      {
+	if(image_in[x][y]>0)
+	{
+	  move2pos(x, y, JUMP);
+	  setLaser(laserPower);
+	}
+	else
+	  setLaser(POW_OFF);
+      }
+    }
+    else
+    {
+      for(y=(MAX_HEIGHT-1);y>=0;y--)
+      {
+	if(image_in[x][y]>0)
+	{
+	  move2pos(x, y, JUMP);
+	  setLaser(laserPower);
+	}
+	else
+	  setLaser(POW_OFF);
+      }
+    }
+  }
+  setLaser(POW_OFF);
   return OK;
 }
