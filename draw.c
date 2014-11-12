@@ -192,6 +192,7 @@ int drawImage() {
   int x,y;
   setLaser(POW_OFF);
   int i=0;
+  int last=0;
   int skip_lines=3;
   //for(x=0;x<MAX_WIDTH;x++)
   //for(x=0;x<MAX_WIDTH;x=x+10) // Y-Achse alle X Zeilen resetten, X-Achse muss nicht resettet werden (oder umgekehrt)
@@ -210,11 +211,17 @@ int drawImage() {
       {
 	if(image_in[x][y]>0)
 	{
-	  move2pos(x, y, JUMP);
-	  setLaser(laserPower);
+	  if(last>0) {
+	    move2pos(x, y, manSpeed);
+	    setLaser(laserPower);
+	  }
+	  else
+	    move2pos(x, y, JUMP);
 	}
 	else
 	  setLaser(POW_OFF);
+	
+	last=image_in[x][y];
       }
     }
     else
@@ -223,13 +230,20 @@ int drawImage() {
       {
 	if(image_in[x][y]>0)
 	{
-	  move2pos(x, y, JUMP);
-	  setLaser(laserPower);
+	  if(last>0) {
+	    move2pos(x, y, manSpeed);
+	    setLaser(laserPower);
+	  }
+	  else
+	    move2pos(x, y, JUMP);
 	}
 	else
 	  setLaser(POW_OFF);
+	
+	last=image_in[x][y];
       }
     }
+    last=0;
   }
   setLaser(POW_OFF);
   return OK;

@@ -75,6 +75,7 @@ int readGCodeFile(char* input)
       ftmp = atof(substring);
       Y = ftmp * STEPS_PER_MM;
       
+      setLaser(POW_OFF);
       printf("Jump to X:%d Y:%d\n",X,Y);
   move2pos(X,Y,JUMP);
   Xold=X;

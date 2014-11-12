@@ -252,7 +252,7 @@ int move2pos(int X, int Y, int speed)
 
 int setZero(){
   int ret;
-  
+  setLaser(POW_OFF);
   printf("Resetting plotter\n");
   if(!SIM)
   {

@@ -129,7 +129,7 @@ int parseImage(void)
   
   MagickWandGenesis();
   magick_wand=NewMagickWand();
-  status=MagickReadImage(magick_wand,"image.png");
+  status=MagickReadImage(magick_wand,"matti.png");
   
   if (status == MagickFalse)
     printf("ERROR\n");  
